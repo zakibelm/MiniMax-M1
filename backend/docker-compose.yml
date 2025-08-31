@@ -1,0 +1,35 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  orchestrator:
+    build: ./core/orchestrator
+    environment:
+      - MCP_SERVERS=drive,email,calendar,creative
+    depends_on:
+      - redis
+      - postgres
+
+  drive-agent:
+    build: ./agents/drive-agent
+    environment:
+      - GOOGLE_CREDENTIALS_PATH=/secrets/google-creds.json
+
+  creative-agent:
+    build: ./agents/creative-agent
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FAL_API_KEY=${FAL_API_KEY}
+
+  telegram-bot:
+    build: ./interfaces/telegram-bot
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - ORCHESTRATOR_URL=http://orchestrator:3000
+
+  redis:
+    image: redis:alpine
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=media_agent

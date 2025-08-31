@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "drive": {
+      "command": "node",
+      "args": ["./agents/drive-agent/dist/server.js"],
+      "env": {
+        "GOOGLE_CREDENTIALS": "..."
+      }
+    },
+    "creative": {
+      "command": "node",
+      "args": ["./agents/creative-agent/dist/server.js"],
+      "env": {
+        "OPENAI_API_KEY": "...",
+        "FAL_API_KEY": "..."
+      }
+    }
+  }
+}
