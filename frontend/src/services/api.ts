@@ -41,3 +41,45 @@ export const sendChatMessage = async (message: string, chatId: string): Promise<
     throw new Error('Failed to communicate with the agent. Please try again later.');
   }
 };
+
+// ==================================
+// Settings API Service
+// ==================================
+
+export interface AgentSettings {
+  apiKey: string;
+  agentModels: {
+    [agentName: string]: string;
+  };
+}
+
+export const getSettings = async (): Promise<AgentSettings> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/settings`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch settings');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error getting settings:', error);
+    throw new Error('Could not load settings from the server.');
+  }
+};
+
+export const saveSettings = async (settings: AgentSettings): Promise<AgentSettings> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/settings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(settings),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to save settings');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error saving settings:', error);
+    throw new Error('Could not save settings to the server.');
+  }
+};

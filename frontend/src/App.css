@@ -45,6 +45,108 @@
   }
 }
 
+/* Settings Page Specific Styles */
+.settings-page {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.settings-form .form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-form label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.settings-form input,
+.settings-form select {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.settings-form select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .settings-header {
+    border-bottom-color: #333;
+  }
+  .back-link {
+    color: #3b9dff;
+  }
+  .settings-form input,
+  .settings-form select {
+    background-color: #333;
+    border-color: #555;
+    color: #eee;
+  }
+  .settings-form select:disabled {
+    background-color: #2a2a2a;
+  }
+}
+
+.status-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #e9ecef;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .status-message {
+    background-color: #3a3a3a;
+    border-color: #555;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-link {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s ease-in-out;
+}
+
+.settings-link:hover {
+  transform: rotate(45deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .settings-link {
+    color: #eee;
+  }
+}
+
 .chat-message.error {
   background-color: #f8d7da;
   color: #721c24;

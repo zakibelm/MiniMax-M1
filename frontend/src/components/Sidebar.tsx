@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { sendChatMessage } from '../services/api'; // Import the API service
 
 // Define the structure of a chat message for type safety
@@ -55,7 +56,12 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>Chat</h2>
+      <div className="sidebar-header">
+        <h2>Chat</h2>
+        <Link to="/settings" className="settings-link" title="Settings">
+          ⚙️
+        </Link>
+      </div>
 
       <div className="chat-history">
         {messages.map(msg => (

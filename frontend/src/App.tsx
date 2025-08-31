@@ -1,13 +1,14 @@
-import Sidebar from './components/Sidebar';
-import MainContent from './components/MainContent';
+import { Routes, Route } from 'react-router-dom';
+import ChatPage from './pages/ChatPage';
+import SettingsPage from './pages/SettingsPage';
 import './App.css';
 
 function App() {
   return (
-    <div className="app-layout">
-      <Sidebar />
-      <MainContent />
-    </div>
+    <Routes>
+      <Route path="/" element={<ChatPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+    </Routes>
   );
 }
 

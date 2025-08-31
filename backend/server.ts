@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import { promises as fs } from 'fs';
+import path from 'path';
 import { MediaAgentOrchestrator, TelegramMessage } from './core/orchestrator/main';
 
 const app = express();
@@ -53,6 +55,40 @@ app.post('/api/chat', async (req, res) => {
         console.error('Error processing /api/chat request:', error);
         res.status(500).json({ error: 'An internal server error occurred.' });
     }
+});
+
+
+const SETTINGS_FILE_PATH = path.join(__dirname, 'config', 'ai-settings.json');
+
+// Route to get the current AI settings
+app.get('/api/settings', async (req, res) => {
+  try {
+    const data = await fs.readFile(SETTINGS_FILE_PATH, 'utf-8');
+    res.status(200).json(JSON.parse(data));
+  } catch (error) {
+    console.error('Error reading settings file:', error);
+    // If the file doesn't exist, we can return default settings
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return res.status(200).json({ apiKey: '', agentModels: {} });
+    }
+    res.status(500).json({ error: 'Failed to read settings.' });
+  }
+});
+
+// Route to save the AI settings
+app.post('/api/settings', async (req, res) => {
+  try {
+    const newSettings = req.body;
+    // You could add more robust validation here based on a schema
+    if (!newSettings || typeof newSettings.apiKey === 'undefined') {
+      return res.status(400).json({ error: 'Invalid settings format.' });
+    }
+    await fs.writeFile(SETTINGS_FILE_PATH, JSON.stringify(newSettings, null, 2), 'utf-8');
+    res.status(200).json({ message: 'Settings saved successfully.' });
+  } catch (error) {
+    console.error('Error writing settings file:', error);
+    res.status(500).json({ error: 'Failed to save settings.' });
+  }
 });
 
 
